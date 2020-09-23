@@ -9,7 +9,7 @@
                   <img class='topGameThumbnail' :src="`${topGame.gameBoxArtURL}`"  alt="">
                 </div>
                 <div class="topGameDescription">
-                  {{ topGame.gameName }}
+                <h3>  {{ topGame.gameName }}</h3> 
               </div>
               </a>
               
@@ -75,7 +75,7 @@ export default {
 #topGames{
     display: flex;
     flex-wrap: wrap;
-
+    padding-top: 2rem!important;
 }
 .topGame{
     flex-basis: 100%;
@@ -84,6 +84,8 @@ export default {
 }
 .topGameThumbnail {
     width: 100%;
+    transform: scaleY(1);
+    transition-delay: 75ms;
 }
 
 @media only screen and (min-width: 350px) {
@@ -116,4 +118,23 @@ export default {
         flex-basis: 14.2857142857%;
     }
 }
+
+.topGameThumbnail:hover{
+    background: #9147ff;
+    transform-origin: 100 100%;
+    transition: transform .1s ease;
+    box-shadow: 1px 1px #9147ff, 2px 2px #9147ff, 3px 3px #9147ff, 4px 4px #9147ff;
+  -webkit-transform: translateX(-3px);
+  transform: scaleX(0);
+  transform: translateX(-3px);
+
+}
+.topGameDescription{
+    line-height: 1.5!important;
+    margin-left: 5px;
+    text-align: start;
+    
+    
+}
+
 </style>
