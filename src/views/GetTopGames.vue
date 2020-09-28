@@ -4,7 +4,7 @@
       <h1>List of Top Games</h1>
       <div id="topGames">
           <div class="topGame" v-for="topGame in listOfTopGames" :key="topGame.gameID">
-              <a href="">
+              <a href="" v-on:click="goToSpecificGameStreamsPage(topGame.gameID, topGame.gameName)">
                 <div class="topGameThumbnailContainer">
                   <img class='topGameThumbnail' :src="`${topGame.gameBoxArtURL}`"  alt="">
                 </div>
@@ -63,6 +63,17 @@ export default {
                    this.listOfTopGames = [...this.listOfTopGames, ...dataListOfTopGames]
                }
            );
+       },
+       goToSpecificGameStreamsPage: function(gameID, gameName) {
+           this.$router.push({
+               name: 'StreamersForGame',
+               params: {
+                   game_name: gameName,
+               },
+               query: {
+                   gameID: gameID,
+               }
+           });
        }
     },
     mounted () {
@@ -138,3 +149,10 @@ export default {
 }
 
 </style>
+
+
+
+
+
+
+

@@ -83,13 +83,44 @@ export default {
     flex-wrap: wrap;
 }
 .topStreamer {
-  /*  flex-basis: 100%; */
-  overflow: hidden;
+    flex-basis: 100%;
+    padding: 7px;
+    margin-bottom: 7px;
+    overflow: hidden;
+}
+.topStreamer a{
+    text-decoration: none;
 }
 .topStreamerThumbnail {
     width: 100%;
 }
 .topStreamerDescription span {
     display: block;
+}
+.topStreamerDescription .username{
+    text-decoration: underline;
+}
+.topStreamerDescription .streamTitle{
+    color: #000;
+}
+@media only screen and (min-width: 600px){
+    #topStreamers .topStreamer{
+        flex-basis: 50%;
+    }
+}
+@media only screen and (min-width: 1000px){
+    #topStreamers .topStreamer{
+        flex-basis: 33.33333333333%;
+    }
+}
+@media only screen and (min-width: 1300px){
+    #topStreamers .topStreamer{
+        flex-basis: 25%;
+    }
+}
+@media only screen and (min-width: 1600px){
+    #topStreamers .topStreamer{
+        flex-basis: 20%;
+    }
 }
 </style>
