@@ -4,7 +4,7 @@
       <h1>List of Top Stramers</h1>
       <div id="topStreamers">
           <div class="topStreamer" v-for="topStreamer in listOfTopStreamers" :key="topStreamer.id">
-              <a href="">
+              <a :href="`streamer/${topStreamer.user_name}?streamerID=${topStreamer.user_id}`">
                   <div class="topStreamerLink">
                       <div class="topStreamerThumbnailContainer">
                           <img class='topStreamerThumbnail' :src="`${topStreamer.thumbnail_url}`" alt="">
@@ -19,23 +19,31 @@
               </a>
           </div>
       </div>
+      <Observer v-on:intersect="intersected"></Observer>
   </div>
 </template>
 <script>
 import topNavbarLinks from '../components/topNavbarLinks';
+import Observer from '../components/Observer'
 export default {
     name: 'GetTopGames',
     components:{
         topNavbarLinks,
+        Observer,
     },
    data: function () {
        return {
            listOfTopStreamers: [],    
+           pagination: '',
        }
    },
    methods: {
-       fetchTopStreamers: function () {
+       fetchTopStreamers: function (pagination) {
            let fetchLink = 'https://api.twitch.tv/helix/streams?first=30';
+
+            if (pagination) {
+                fetchLink = 'https://api.twitch.tv/helix/streams?first=30&after=' + pagination;
+            }
 
             fetch(fetchLink, {
                 method: 'get',
@@ -52,7 +60,9 @@ export default {
             .then(
                 data => {
                    // console.log(data);
+                   this.pagination = data.pagination.cursor;
                    let dataListOfTopStreamers = [];
+
 
                    for (var key in data.data) {
                        dataListOfTopStreamers.push({
@@ -69,10 +79,13 @@ export default {
                    this.listOfTopStreamers = [...this.listOfTopStreamers, ...dataListOfTopStreamers];
                 }
             );
+       },
+       intersected: function () {
+           this.fetchTopStreamers(this.pagination);
        }
    },
    mounted () {
-       this.fetchTopStreamers();
+     //  this.fetchTopStreamers();
    }
 }
 </script>

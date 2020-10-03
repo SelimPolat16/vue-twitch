@@ -18,24 +18,32 @@
        
         </div>
     </div>
+    <Observer v-on:intersect="intersected"></Observer>
 </div>
 </template>
 
 <script>
-import topNavbarLinks from '@/components/topNavbarLinks'
+import topNavbarLinks from '@/components/topNavbarLinks';
+import Observer from '../components/Observer';
 export default {
     name: 'StreamersForGame',
     components: {
         topNavbarLinks,
+        Observer,
     },
     data: function() {
         return{
             listOfTopStreamersForSpecificGame: [],
+            pagination: '',
         }   
       },
     methods: {
-        fetchTopStreamersForSpecificGame: function () {
+        fetchTopStreamersForSpecificGame: function (pagination) {
            let fetchLink = 'https://api.twitch.tv/helix/streams?first=30&game_id=' + this.$route.query.gameID;
+
+           if (pagination) {
+               fetchLink = 'https://api.twitch.tv/helix/streams?first=30&game_id=' + this.$route.query.gameID + '&after=' + pagination;
+           }
 
             fetch(fetchLink, {
                 method: 'get',
@@ -52,6 +60,9 @@ export default {
                 .then(
                     data => {
                         console.log(data);
+
+                        this.pagination = data.pagination.cursor;
+
                         let datalistOfTopStreamersForSpecificGame = [];
 
                         for (var key in data.data){
@@ -69,10 +80,13 @@ export default {
 
                     }
                 );
+        },
+        intersected: function () {
+            this.fetchTopStreamersForSpecificGame(this.pagination);
         }
     },
     mounted () {
-        this.fetchTopStreamersForSpecificGame();
+      //  this.fetchTopStreamersForSpecificGame();
     }
 }
 </script>

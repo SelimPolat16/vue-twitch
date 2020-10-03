@@ -83,6 +83,33 @@ export default {
         var player = embed.getPlayer();
         player.play();
       });
+       },
+       fetchStreamViewCount: function () {
+         fetch('https://api.twitch.tv/helix/streams?user_id=' + this.$route.query.streamerID, {
+           method: 'get',
+           headers: new Headers ({
+             'Authorization': 'Bearer aadu4kz6l9nhypz12efbij3ld5mp4d',
+              'Client-ID': 'rnfu5mx7fvhrnyuzkkoskjqvqmz0tj',
+           })
+           
+         })
+         .then(
+           function (response) {
+             return response.json();
+           }
+         )
+         .then(
+           data => {
+             console.log(data);
+             this.streamViewerCount = data.data[0].viewer_count;
+             console.log(this.streamViewerCount);
+           }
+         )
+       },
+       fetchStreamViewCountSetInterval: function () {
+         setInterval(() => {
+           this.fetchStreamViewCount();
+         }, 120000);
        }
     },
     mounted () {
@@ -91,6 +118,9 @@ export default {
       this.insertTwitchEmbedScript();
 
        setTimeout(() => this.runTwitchEmbed(), 500);
+
+      this.fetchStreamViewCount();
+       this.fetchStreamViewCountSetInterval();
     }
 }
 </script>
