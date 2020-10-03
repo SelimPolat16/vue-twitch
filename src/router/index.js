@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import GetTopGames from '../views/GetTopGames.vue'
 import GetTopStreamers from '../views/GetTopStreamers.vue'
 import StreamersForGame from '../views/StreamersForGame.vue'
-
+import Streamer from '../views/Streamer.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,6 +21,11 @@ const routes = [
     path: '/StreamersForGame/:game_name',
     name: 'StreamersForGame',
     component: StreamersForGame,
+  },
+  {
+    path: '/streamer/:streamer_user_name',
+    name: 'Streamer',
+    component: Streamer,
   }
 ]
 

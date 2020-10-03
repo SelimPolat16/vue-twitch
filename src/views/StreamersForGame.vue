@@ -3,14 +3,19 @@
     <topNavbarLinks></topNavbarLinks>
     <h1>Streamers For  {{ $route.params.game_name }} </h1>
     <div id="topStreamersForSpecificGame">
-        <div class="topStreamerForSpecificGame" v-for='topStreamerForSpecificGame in listOfTopStreamersForSpecificGame' :key='topStreamerForSpecificGame.id'>
-           <div class="topStreamerForSpecificGameThumbnailContainer">
+        <div  class="topStreamerForSpecificGame" v-for='topStreamerForSpecificGame in listOfTopStreamersForSpecificGame' :key='topStreamerForSpecificGame.id'>
+            <a :href='`../streamer/${topStreamerForSpecificGame.user_name}?streamerID=${topStreamerForSpecificGame.user_id}`' class="topStreamerForSpecificGameLink">
+                
+                    <div class="topStreamerForSpecificGameThumbnailContainer">
                <img :src="`${topStreamerForSpecificGame.stream_thumbnail_url}`" alt="" class="topStreamerSpecificGameThumbnail">
-           </div>
+           </div >
            <div class="topStreamerForGameDescription">
                <div class="username"> {{ topStreamerForSpecificGame.user_name }} </div>
                <div class="viewerCount"> Viewers: {{ topStreamerForSpecificGame.stream_viewer_count }} </div>
            </div>
+
+            </a>
+       
         </div>
     </div>
 </div>
@@ -30,7 +35,7 @@ export default {
       },
     methods: {
         fetchTopStreamersForSpecificGame: function () {
-            let fetchLink = 'https://api.twitch.tv/helix/streams?first=30&game_id=' + this.$route.query.gameID;
+           let fetchLink = 'https://api.twitch.tv/helix/streams?first=30&game_id=' + this.$route.query.gameID;
 
             fetch(fetchLink, {
                 method: 'get',
@@ -85,11 +90,11 @@ export default {
     margin-bottom: 7px;
     overflow: hidden;
 }
-.topStreamerSpecificGameThumbnail {
+.topStreamerSpecificGameThumbnail{
     width: 100%;
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 600px) {
     .topStreamerForSpecificGame {
         flex-basis: 50%;
     }
